@@ -32,7 +32,7 @@ import { Cubes } from "./components/Cubes";
 
 function App() {
   useEffect(() => {
-    const socket = new WebSocket('wss://f oobotgame.glitch.me');  // Update with your server URL
+    const socket = new WebSocket('wss://foobotgame.glitch.me');  // Update with your server URL
 
     // Listen for messages from the server
     socket.addEventListener('message', (event) => {
