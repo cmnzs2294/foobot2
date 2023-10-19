@@ -80,19 +80,16 @@ import { Cubes } from "./components/Cubes";
 
 function App() {
   useEffect(() => {
-    const socket = new WebSocket('wss://foobotgame.glitch.me');  // Update with your server URL
-
-    // Listen for messages from the server
-    socket.addEventListener('message', (event) => {
-      console.log('Message from server:', event.data);
-      // Handle messages received from the server
-    });
+    const newSocket = new WebSocket('ws://foobotgame.glitch.me'); // Replace with your server URL
+    setSocket(newSocket);
 
     return () => {
-      // Clean up websocket on component unmount
-      socket.close();
+      if (newSocket) {
+        newSocket.close();
+      }
     };
   }, []);
+
 
   return (
     <Canvas camera={{ fov: 45, position: [-10, 10, 10] }}>
