@@ -13,7 +13,24 @@ const faceDirection = [
     [0, 0, -1],
 ]
 
-
+// Listen for updates from the server
+useEffect(() => {
+    socket.addEventListener('message', (event) => {
+      const message = JSON.parse(event.data);
+      
+      // Process the message based on its action
+      if (message.action === 'addCube') {
+        // Add a cube to the client's state at the specified position
+        const newCube = new THREE.Mesh(new THREE.BoxGeometry, new THREE.MeshStandardMaterial({ color: 'white' }));
+        newCube.position.copy(message.position);
+        
+        // Update the client's state to include the new cube
+        setCubes((prevCubes) => [...prevCubes, { mesh: newCube }]);
+      }
+      // Handle other actions as needed
+    });
+  }, [socket]);
+  
 export const Cubes = () => {
 
     const [hover, setHover] = useState(null)
@@ -113,6 +130,18 @@ export const Cubes = () => {
             const voxel = new THREE.Mesh(new THREE.BoxGeometry, new THREE.MeshStandardMaterial({ color: 'white' }));
             voxel.position.copy(hover)
 
+            // Create a message object with cube placement info
+    const message = {
+        action: 'addCube',     // A string to describe the action
+        position: voxel.position, // The cube's position
+      };
+  
+      // Convert the message object to a JSON string
+      const messageString = JSON.stringify(message);
+  
+      // Send the message to the server
+      socket.send(messageString);
+
             //Add to array
             setCubes((prevCubes) => [...prevCubes, { mesh: voxel }]);
             setPlayerBlockCount((prevCount) => prevCount + 1);
@@ -120,7 +149,7 @@ export const Cubes = () => {
         } else {
             togglePlayer();
         }
-    }, [hover, cubes, isShiftPressed, playerBlockCount])
+    }, [hover, cubes, isShiftPressed, playerBlockCount]);
 
 
     //player control

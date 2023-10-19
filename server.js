@@ -12,6 +12,7 @@ wss.on('connection', (ws) => {
 
   // Broadcast incoming messages to all connected clients
   ws.on('message', (message) => {
+    // Broadcast the message to all clients (excluding the sender)
     wss.clients.forEach((client) => {
       if (client !== ws && client.readyState === WebSocket.OPEN) {
         client.send(message);
@@ -24,6 +25,7 @@ wss.on('connection', (ws) => {
     console.log('Client disconnected');
   });
 });
+
 
 server.listen(8080, () => {
   console.log('Server is listening on port 8080');
