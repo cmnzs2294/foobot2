@@ -79,6 +79,8 @@ import { OrbitControls } from "@react-three/drei";
 import { Cubes } from "./components/Cubes";
 
 function App() {
+  const [socket, setSocket] = useState(null);
+
   useEffect(() => {
     const newSocket = new WebSocket('wss://foobotgame.glitch.me'); // Replace with your server URL
     setSocket(newSocket);
