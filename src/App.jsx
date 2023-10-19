@@ -80,7 +80,7 @@ import { Cubes } from "./components/Cubes";
 
 function App() {
   useEffect(() => {
-    const newSocket = new WebSocket('ws://foobotgame.glitch.me'); // Replace with your server URL
+    const newSocket = new WebSocket('wss://foobotgame.glitch.me'); // Replace with your server URL
     setSocket(newSocket);
 
     return () => {
