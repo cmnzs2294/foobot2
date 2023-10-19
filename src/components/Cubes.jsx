@@ -2,7 +2,6 @@ import * as THREE from "three"
 import { useRef, useCallback, useState, useEffect } from "react"
 import { Edges, Text } from "@react-three/drei"
 
- 
 
 // Sides of Cube
 const faceDirection = [
@@ -12,34 +11,7 @@ const faceDirection = [
     [0, -1, 0],
     [0, 0, 1],
     [0, 0, -1],
-];
-
-export const Cubes = ({ socket }) => {
-    const [hover, setHover] = useState(null);
-    const [cubes, setCubes] = useState([]);
-    const [isShiftPressed, setIsShiftPressed] = useState(false);
-
-    /// Listen for updates from the server
-  useEffect(() => {
-    if (socket) {
-      socket.addEventListener('message', (event) => {
-        const message = JSON.parse(event.data);
-
-        if (message.action === 'addCube') {
-          const newCube = new THREE.Mesh(new THREE.BoxGeometry, new THREE.MeshStandardMaterial({ color: 'white' }));
-          newCube.position.copy(message.position);
-          setCubes((prevCubes) => [...prevCubes, { mesh: newCube }]);
-        }
-        // Handle other actions as needed
-      });
-    }
-  }, [socket]);
-
-  return (
-    // ...
-  );
-};
-  
+]
 
 
 export const Cubes = () => {
@@ -141,18 +113,6 @@ export const Cubes = () => {
             const voxel = new THREE.Mesh(new THREE.BoxGeometry, new THREE.MeshStandardMaterial({ color: 'white' }));
             voxel.position.copy(hover)
 
-            // Create a message object with cube placement info
-    const message = {
-        action: 'addCube',     // A string to describe the action
-        position: voxel.position, // The cube's position
-      };
-  
-      // Convert the message object to a JSON string
-      const messageString = JSON.stringify(message);
-  
-      // Send the message to the server
-      socket.send(messageString);
-
             //Add to array
             setCubes((prevCubes) => [...prevCubes, { mesh: voxel }]);
             setPlayerBlockCount((prevCount) => prevCount + 1);
@@ -160,7 +120,7 @@ export const Cubes = () => {
         } else {
             togglePlayer();
         }
-    }, [hover, cubes, isShiftPressed, playerBlockCount]);
+    }, [hover, cubes, isShiftPressed, playerBlockCount])
 
 
     //player control
