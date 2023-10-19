@@ -5,6 +5,8 @@ import { OrbitControls } from "@react-three/drei";
 import { Cubes } from "./components/Cubes";
 
 function App() {
+  
+  const [message, setMessage] = useState(null);
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
@@ -19,6 +21,18 @@ function App() {
     newSocket.onmessage = (event) => {
       // Handle incoming messages from the server
       console.log('Received message from server:', event.data);
+    };
+
+    newSocket.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      if (data.playerNumber === 1 || data.playerNumber === 2) {
+        // Player 1 or Player 2
+        // Handle game-related logic
+      } else {
+        // Third person
+        setMessage("Sorry, the game is already full. Please try again later.");
+        newSocket.close();
+      }
     };
 
     newSocket.onerror = (error) => {
@@ -41,15 +55,19 @@ function App() {
   }, []);
 
   return (
-    <>
+    <div>
+      {message ? (
+        <p>{message}</p>
+      ) : (
       <Canvas camera={{ fov: 45, position: [-10, 10, 10] }}>
         <color attach="background" args={["#white"]} />
         <OrbitControls makeDefault minPolarAngle={0} maxPolarAngle={Math.PI / 2.15} />
         <Background />
         <Cubes />
       </Canvas>
-    </>
+    )}
+    </div>
   );
-}
-
+      }
+      
 export default App;
