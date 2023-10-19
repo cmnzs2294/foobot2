@@ -6,6 +6,39 @@ const app = express();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
+
+
+let connectedClients = 0;
+
+wss.on('connection', (ws) => {
+  if (connectedClients < 2) {
+    // Assign player numbers
+    connectedClients++;
+    ws.playerNumber = connectedClients;
+
+    // Log that a client has connected and their assigned player number
+    console.log(`Client connected with player number ${ws.playerNumber}`);
+    
+    // Broadcast the player number to the connected client
+    ws.send(JSON.stringify({ playerNumber: ws.playerNumber }));
+    
+    // Handle messages, game logic, and player interactions here
+    
+  } else {
+
+    // Log that a client attempted to connect when there are already two players
+    console.log('Client attempted to connect, but two players are already in the game.');
+    
+
+    // Reject the connection if there are already two players
+    ws.close();
+  }
+});
+
+
+
+/* player counter
+
 let clientIdCounter = 0; // Initialize the client ID counter
 
 wss.on('connection', (ws) => {
@@ -31,44 +64,8 @@ wss.on('connection', (ws) => {
   ws.on('close', () => {
     console.log(`Client ${ws.clientId} disconnected`);
   });
-});
-
-server.listen(8080, () => {
-  console.log('Server is listening on port 8080');
-});
-
-
-
-
-/* original 231018
-
-const express = require('express');
-const http = require('http');
-const WebSocket = require('ws');
-
-const app = express();
-const server = http.createServer(app);
-const wss = new WebSocket.Server({ server });
-
-wss.on('connection', (ws) => {
-  // Handle new websocket connection
-  console.log('New client connected');
-
-  // Broadcast incoming messages to all connected clients
-  ws.on('message', (message) => {
-    wss.clients.forEach((client) => {
-      if (client !== ws && client.readyState === WebSocket.OPEN) {
-        client.send(message);
-      }
-    });
-  });
-
-  // Handle client disconnection
-  ws.on('close', () => {
-    console.log('Client disconnected');
-  });
-});
-
-server.listen(8080, () => {
-  console.log('Server is listening on port 8080');
 }); */
+
+server.listen(8080, () => {
+  console.log('Server is listening on port 8080');
+});
