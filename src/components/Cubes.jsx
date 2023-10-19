@@ -2,6 +2,7 @@ import * as THREE from "three"
 import { useRef, useCallback, useState, useEffect } from "react"
 import { Edges, Text } from "@react-three/drei"
 
+ 
 
 // Sides of Cube
 const faceDirection = [
@@ -11,26 +12,36 @@ const faceDirection = [
     [0, -1, 0],
     [0, 0, 1],
     [0, 0, -1],
-]
+];
 
-// Listen for updates from the server
-useEffect(() => {
-    socket.addEventListener('message', (event) => {
-      const message = JSON.parse(event.data);
-      
-      // Process the message based on its action
-      if (message.action === 'addCube') {
-        // Add a cube to the client's state at the specified position
-        const newCube = new THREE.Mesh(new THREE.BoxGeometry, new THREE.MeshStandardMaterial({ color: 'white' }));
-        newCube.position.copy(message.position);
-        
-        // Update the client's state to include the new cube
-        setCubes((prevCubes) => [...prevCubes, { mesh: newCube }]);
-      }
-      // Handle other actions as needed
-    });
+export const Cubes = ({ socket }) => {
+    const [hover, setHover] = useState(null);
+    const [cubes, setCubes] = useState([]);
+    const [isShiftPressed, setIsShiftPressed] = useState(false);
+
+    /// Listen for updates from the server
+  useEffect(() => {
+    if (socket) {
+      socket.addEventListener('message', (event) => {
+        const message = JSON.parse(event.data);
+
+        if (message.action === 'addCube') {
+          const newCube = new THREE.Mesh(new THREE.BoxGeometry, new THREE.MeshStandardMaterial({ color: 'white' }));
+          newCube.position.copy(message.position);
+          setCubes((prevCubes) => [...prevCubes, { mesh: newCube }]);
+        }
+        // Handle other actions as needed
+      });
+    }
   }, [socket]);
+
+  return (
+    // ...
+  );
+};
   
+
+
 export const Cubes = () => {
 
     const [hover, setHover] = useState(null)
