@@ -13,6 +13,14 @@ const gameState = {
 
 let connectedClients = 0;
 
+// Broadcast the game state to all connected clients
+function broadcastGameState() {
+  wss.clients.forEach((client) => {
+    client.send(JSON.stringify(gameState));
+  });
+}
+
+
 wss.on('connection', (ws) => {
   if (connectedClients < 2) {
     // Assign player numbers
@@ -24,6 +32,9 @@ wss.on('connection', (ws) => {
   
     // Broadcast the player number to the connected client
     ws.send(JSON.stringify({ playerNumber: ws.playerNumber }));
+
+    // Send the initial game state to the connected client
+    ws.send(JSON.stringify(gameState));
     
     // Handle messages, game logic, and player interactions here
 
