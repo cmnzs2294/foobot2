@@ -23,6 +23,12 @@ wss.on('connection', (ws) => {
     ws.send(JSON.stringify({ playerNumber: ws.playerNumber }));
     
     // Handle messages, game logic, and player interactions here
+
+    // Handle client disconnection
+    ws.on('close', () => {
+      console.log(`Client ${ws.playerNumber} disconnected`);
+      connectedClients--; // Decrement the player count when a player disconnects
+    });
     
   } else {
 
