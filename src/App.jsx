@@ -29,11 +29,15 @@ function App() {
 
     newSocket.onmessage = (event) => {
       const data = JSON.parse(event.data);
+
+      // Player 1 or Player 2
       if (data.playerNumber === 1 || data.playerNumber === 2) {
-        // Player 1 or Player 2
-        // Handle game-related logic
+        console.log(`You are Player ${data.playerNumber}`);
+        
+
+
+      // Third person 
       } else {
-        // Third person
         setGameFull(true); // Set gameFull to true
         newSocket.close();
       }
