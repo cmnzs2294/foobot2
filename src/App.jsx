@@ -77,4 +77,5 @@ function App() {
  );
 }
 
-export default App;
+//export default App;
+export {App, socketRef};
