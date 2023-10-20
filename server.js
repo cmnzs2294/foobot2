@@ -18,7 +18,7 @@ wss.on('connection', (ws) => {
 
     // Log that a client has connected and their assigned player number
     console.log(`Client connected with player number ${ws.playerNumber}`);
-    
+  
     // Broadcast the player number to the connected client
     ws.send(JSON.stringify({ playerNumber: ws.playerNumber }));
     
