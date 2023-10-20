@@ -6,8 +6,8 @@ const app = express();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 const gameState = {
-  currentPlayer: 1,
-  cubes: [],
+  currentPlayer: 1, // Initial player
+  cubes: [], // Array to store cube pos
 };
 
 
@@ -19,6 +19,15 @@ function broadcastGameState() {
     client.send(JSON.stringify(gameState));
   });
 }
+
+// Example: When a player makes a move (e.g., adds a cube), you would update the gameState and then send it to clients
+function playerMakesMove() {
+  // Update gameState based on the move
+  // For example, if a player adds a cube, push the cube's position to gameState.cubes
+
+  // After updating gameState, send the updated state to all clients
+  broadcastGameStateGameState();
+
 
 
 wss.on('connection', (ws) => {
