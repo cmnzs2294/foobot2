@@ -1,6 +1,8 @@
 import * as THREE from "three"
 import { useRef, useCallback, useState, useEffect } from "react"
 import { Edges, Text } from "@react-three/drei"
+import { socket } from '.app.jsx'
+import { WebGLUtils } from "three";
 
 
 // Sides of Cube
