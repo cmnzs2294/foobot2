@@ -28,10 +28,14 @@ wss.on('connection', (ws) => {
     ws.on('close', () => {
       console.log(`Client ${ws.playerNumber} disconnected`);
       connectedClients--; // Decrement the player count when a player disconnects
+      logCurrentNumberOfPlayers(); // Log the current number of connected players
     });
 
-    // Log the current number of connected players
+/*old    // Log the current number of connected players
     console.log(`Current number of players: ${connectedClients}`);
+*/
+
+    logCurrentNumberOfPlayers(); // Log the current number of connected players
     
   } else {
 
@@ -41,6 +45,11 @@ wss.on('connection', (ws) => {
 
     // Reject the connection if there are already two players
     ws.close();
+  }
+
+  // Function to log the current number of connected players
+  function logCurrentNumberOfPlayers() {
+    console.log(`Current number of players: ${connectedClients}`);
   }
 });
 
