@@ -1,7 +1,7 @@
 import * as THREE from "three"
 import { useRef, useCallback, useState, useEffect } from "react"
 import { Edges, Text } from "@react-three/drei"
-import { socket } from './App.jsx'
+import { App,socketRef } from './App.jsx'
 import { WebGLUtils } from "three";
 
 
@@ -15,6 +15,8 @@ const faceDirection = [
     [0, 0, -1],
 ]
 
+// Access the WebSocket reference
+const socket = socketRef.current;
 
 export const Cubes = () => {
 

@@ -9,13 +9,15 @@ import { Cubes } from "./components/Cubes";
 function App() {
   
   const [message, setMessage] = useState(null);
-  const [socket, setSocket] = useState(null);
+ //old //  const [socket, setSocket] = useState(null);
   const [gameFull, setGameFull] = useState(false); // Track if the game is full
+  const socketRef = useRef(null); // Create a ref to hold the socket
 
 
   useEffect(() => {
     // Create a WebSocket connection when the component mounts
-    const newSocket = new WebSocket('wss://foobotgame.glitch.me'); // Replace with your server URL
+    socketRef.current = new WebSocket('wss://foobotgame.glitch.me'); // Replace with your server URL
+    const newSocket = socketRef.current;
 
     // Set up event listeners for the WebSocket
     newSocket.onopen = () => {
@@ -84,4 +86,4 @@ function App() {
  );
 }
 
-export {App, newSocket};
+export {App, socketRef};
