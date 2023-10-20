@@ -5,13 +5,14 @@ import { OrbitControls } from "@react-three/drei";
 import { Cubes } from "./components/Cubes";
 
 
+const socketRef = useRef(null); // Create a ref to hold the socket
 
 export function App() {
   
   const [message, setMessage] = useState(null);
  //old //  const [socket, setSocket] = useState(null);
   const [gameFull, setGameFull] = useState(false); // Track if the game is full
-  const socketRef = useRef(null); // Create a ref to hold the socket
+  
 
 
   useEffect(() => {
