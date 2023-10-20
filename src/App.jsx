@@ -38,6 +38,7 @@ function App() {
 
       // Third person 
       } else {
+        console.log("There are two players in the game already. Please try again later");
         setGameFull(true); // Set gameFull to true
         newSocket.close();
       }
