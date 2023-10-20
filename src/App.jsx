@@ -5,6 +5,8 @@ import { OrbitControls } from "@react-three/drei";
 import { Cubes } from "./components/Cubes";
 
 function App() {
+  
+  const [message, setMessage] = useState(null);
   const [socket, setSocket] = useState(null);
   const [gameFull, setGameFull] = useState(false); // Track if the game is full
 
