@@ -20,16 +20,23 @@ function broadcastGameState() {
   });
 }
 
-// Example: When a player makes a move (e.g., adds a cube), you would update the gameState and then send it to clients
-function playerMakesMove() {
-  // Update gameState based on the move
-  // For example, if a player adds a cube, push the cube's position to gameState.cubes
 
-  // After updating gameState, send the updated state to all clients
-  broadcastGameStateGameState();
-}
+
+
 
 wss.on('connection', (ws) => {
+
+  ws.on('message', (message) => {
+    console.log(`Received message from Player ${ws.playerNumber}: ${message}`);
+    
+    // You can process the received message here, depending on your game logic.
+    // You may want to update the `gameState` based on the message.
+
+    // Broadcast the updated game state to all connected clients
+    broadcastGameState();
+});
+
+
   if (connectedClients < 2) {
     // Assign player numbers
     connectedClients++;

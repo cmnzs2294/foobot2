@@ -1,7 +1,7 @@
 import * as THREE from "three"
 import { useRef, useCallback, useState, useEffect } from "react"
 import { Edges, Text } from "@react-three/drei"
-import { socket } from '.app.jsx'
+import { socket } from './App.jsx'
 import { WebGLUtils } from "three";
 
 
@@ -116,6 +116,19 @@ export const Cubes = () => {
                 return updatedCubes;
               });
               setMovesRemaining((prevMovesRemaining) => prevMovesRemaining - 1);
+
+               // Construct the message
+        const message = {
+            type: 'updateGameState',
+            blocks: cubes, // Updated cubes array
+            movesRemaining: movesRemaining - 1, // Updated moves remaining
+        };
+
+        // Send the message to the server using the WebSocket connection
+        socket.send(JSON.stringify(message)); // Serialize the message as a JSON string
+
+
+            
             } else {
               togglePlayer();
             }
@@ -148,6 +161,16 @@ export const Cubes = () => {
 
             //Decrement movesRemaining
             setMovesRemaining((prevMovesRemaining) => prevMovesRemaining - 1);
+
+             // Construct the message
+        const message = {
+            type: 'updateGameState',
+            blocks: cubes, // Updated cubes array
+            movesRemaining: movesRemaining - 1, // Updated moves remaining
+        };
+
+        // Send the message to the server using the WebSocket connection
+        socket.send(JSON.stringify(message)); // Serialize the message as a JSON string
 
         } else {
             togglePlayer();
