@@ -29,6 +29,9 @@ wss.on('connection', (ws) => {
       console.log(`Client ${ws.playerNumber} disconnected`);
       connectedClients--; // Decrement the player count when a player disconnects
     });
+
+    // Log the current number of connected players
+    console.log(`Current number of players: ${connectedClients}`);
     
   } else {
 
