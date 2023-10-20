@@ -27,8 +27,7 @@ function playerMakesMove() {
 
   // After updating gameState, send the updated state to all clients
   broadcastGameStateGameState();
-
-
+}
 
 wss.on('connection', (ws) => {
   if (connectedClients < 2) {

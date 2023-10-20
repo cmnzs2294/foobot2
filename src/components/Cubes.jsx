@@ -20,6 +20,8 @@ export const Cubes = () => {
     const [cubes, setCubes] = useState([]);
     const [isShiftPressed, setIsShiftPressed] = useState(false);
 
+    const [gameState, setGameState] = useState(initialGameState); // Define initialGameState
+    
     //keep track of players + block count
     const [currentPlayer, setCurrentPlayer] = useState(1);
     const [playerBlockCount, setPlayerBlockCount] = useState(0);
