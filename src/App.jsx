@@ -4,6 +4,8 @@ import { Background } from "./components/Background";
 import { OrbitControls } from "@react-three/drei";
 import { Cubes } from "./components/Cubes";
 
+
+
 function App() {
   
   const [message, setMessage] = useState(null);
@@ -82,4 +84,4 @@ function App() {
  );
 }
 
-export {App, socket};
+export {App, newSocket};
