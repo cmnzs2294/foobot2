@@ -1,7 +1,7 @@
 import * as THREE from "three"
 import { useRef, useCallback, useState, useEffect } from "react"
 import { Edges, Text } from "@react-three/drei"
-import { App, socketRef } from '../App.jsx'
+import { socketRef } from '../App.jsx'
 import { WebGLUtils } from "three";
 
 
