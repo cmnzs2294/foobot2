@@ -7,7 +7,7 @@ import { Cubes } from "./components/Cubes";
 
 const socketRef = useRef(null); // Create a ref to hold the socket
 
-export function App() {
+function App() {
   
   const [message, setMessage] = useState(null);
  //old //  const [socket, setSocket] = useState(null);
