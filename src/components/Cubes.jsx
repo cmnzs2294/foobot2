@@ -33,17 +33,24 @@ export const Cubes = () => {
 
     const playerTurnText = `Current Turn: ${playerNames[currentPlayer - 1]}`;
 
+    // An array to store cube data
     const initialGameState = {
-        cubes: [], // An array to store cube data
+        cubes: [], 
       };
 
+    //update GameState  
     const updateGameState = (newState) => {
         setGameState((prevState) => ({
           ...prevState,
           ...newState,
         }));
-      };  
-      
+      };
+    
+     // Check if it's the current player's turn and if they have moves remaining
+    const isMyTurn = () => {
+        return currentPlayer === 1 && movesRemaining > 0;
+
+      };
 
     // event listeners
     const handleKeyDown = (e) => {
@@ -100,21 +107,18 @@ export const Cubes = () => {
         }
 
         if (isShiftPressed) {
-
-            if (playerBlockCount <= 2) {
-                setCubes((prevCubes) => {
-                    const updatedCubes = [...prevCubes];
-
-                    updatedCubes.splice(index, 1);
-                    return updatedCubes;
-                });
-
-                setPlayerBlockCount((prevCount) => prevCount + 1);
+            if (movesRemaining > 0) {
+              setCubes((prevCubes) => {
+                const updatedCubes = [...prevCubes];
+                updatedCubes.splice(index, 1);
+                return updatedCubes;
+              });
+              setMovesRemaining((prevMovesRemaining) => prevMovesRemaining - 1);
             } else {
-                togglePlayer();
+              togglePlayer();
             }
-        }
-    }, [cubes, isShiftPressed, playerBlockCount, currentPlayer])
+          }
+        }, [cubes, isShiftPressed, isMyTurn, movesRemaining, currentPlayer]);
 
 
     // When pointer is out of screen
@@ -123,28 +127,36 @@ export const Cubes = () => {
 
     // Add cube on click
     const addCube = useCallback((e) => {
+        
         e.stopPropagation()
 
         if (!hover || isShiftPressed || e.delta > 10) return;
 
-        if (playerBlockCount <= 2) {
+        if (!isMyTurn()) {
+            console.log("It's not your turn or you've used all your moves!");
+            return;
+        }    
+
+        if (movesRemaining > 0) {
             const voxel = new THREE.Mesh(new THREE.BoxGeometry, new THREE.MeshStandardMaterial({ color: 'white' }));
             voxel.position.copy(hover)
 
             //Add to array
             setCubes((prevCubes) => [...prevCubes, { mesh: voxel }]);
-            setPlayerBlockCount((prevCount) => prevCount + 1);
+
+            //Decrement movesRemaining
+            setMovesRemaining((prevMovesRemaining) => prevMovesRemaining - 1);
 
         } else {
             togglePlayer();
         }
-    }, [hover, cubes, isShiftPressed, playerBlockCount])
+    }, [hover, cubes, isShiftPressed, isMyTurn, movesRemaining])
 
 
     //player control
     const togglePlayer = () => {
         setCurrentPlayer((prevPlayer) => (prevPlayer === 1 ? 2 : 1));
-        setPlayerBlockCount(0);
+        setMovesRemaining(3);
         console.log(currentPlayer)
     };
 
