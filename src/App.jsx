@@ -6,7 +6,7 @@ import { Cubes } from "./components/Cubes";
 
 
 
-function App() {
+export function App() {
   
   const [message, setMessage] = useState(null);
  //old //  const [socket, setSocket] = useState(null);
@@ -78,4 +78,5 @@ function App() {
 }
 
 export default App;
+
 export { socketRef };
