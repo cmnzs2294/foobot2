@@ -21,11 +21,15 @@ export const Cubes = () => {
     const [isShiftPressed, setIsShiftPressed] = useState(false);
 
     const [gameState, setGameState] = useState(initialGameState); // Define initialGameState
-    
+
     //keep track of players + block count
-    const [currentPlayer, setCurrentPlayer] = useState(1);
-    const [playerBlockCount, setPlayerBlockCount] = useState(0);
+    const [currentPlayer, setCurrentPlayer] = useState(1); // Set player 1 as the initial player
+
+    /*const [playerBlockCount, setPlayerBlockCount] = useState(0);*/
+    
     const [playerNames] = useState(['Player 1', 'Player 2']);
+    const [movesRemaining, setMovesRemaining] = useState(3); // Set the initial number of moves
+
 
     const playerTurnText = `Current Turn: ${playerNames[currentPlayer - 1]}`;
 
