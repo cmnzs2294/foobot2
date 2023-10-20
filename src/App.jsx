@@ -24,13 +24,6 @@ function App() {
       console.log('WebSocket connection established');
     };
 
-   /*old
-   
-   newSocket.onmessage = (event) => {
-      // Handle incoming messages from the server
-      console.log('Received message from server:', event.data);
-    }; */
-
     newSocket.onmessage = (event) => {
       const data = JSON.parse(event.data);
 
@@ -56,9 +49,7 @@ function App() {
       console.log('WebSocket connection closed');
     };
 
-    // Save the socket in the component state
-    setSocket(newSocket);
-
+  
     // Clean up the socket when the component unmounts
     return () => {
       if (newSocket) {
